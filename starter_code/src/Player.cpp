@@ -21,6 +21,9 @@ Player::Player(const std::string& name)
 //
 Player::~Player() {
     // TODO: Delete all inventory items
+    for (Item* item : inventory){
+        delete item;
+    }
 }
 
 
@@ -34,6 +37,35 @@ Player::~Player() {
 //
 void Player::displayStats() const {
     // TODO: Display comprehensive player stats
+    std::cout << "============================\n";
+    std::cout << "     PLAYER STATS\n";
+    std::cout << "============================\n";
+    std::cout << "Name: " << getName() << "\n";
+    std::cout << "Level: " << level << "\n";
+    std::cout << "HP: " << getCurrentHP() << "/" << getMaxHP() << "\n";
+
+    int attack = getAttack();
+    int defense = getDefense();
+
+    if(equipped_weapon){
+        attack += equipped_weapon->getDamageBonus();
+    }
+    if(equipped_armor){
+        defense += equipped_armor->getDefenseBonus();
+    }
+
+    std::cout << "Attack: " << attack;\
+
+    if (equipped_weapon) std::cout << " (+" << equipped_weapon->getDamageBonus() << " from " << equipped_weapon->getName() << ")";
+    std::cout << "\n";
+
+    std::cout << "Defense: " << defense;
+    if (equipped_armor) std::cout << " (+" << equipped_armor->getDefenseBonus() << " from " << equipped_armor->getName() << ")";
+    std::cout << "\n";
+
+    std::cout << "Gold: " << gold << "\n";
+    std::cout << "EXP: " << experience << "\n";
+    std::cout << "============================\n";
 }
 
 
@@ -44,7 +76,11 @@ void Player::displayStats() const {
 //
 int Player::calculateDamage() const {
     // TODO: Calculate damage with weapon bonus
-    return 0;  // REPLACE THIS
+    int base = getAttack();
+    if(equipped_weapon){
+        base += equipped_weapon->getDamageBonus();
+        return base;
+    }
 }
 
 
@@ -55,6 +91,9 @@ int Player::calculateDamage() const {
 //
 void Player::addItem(Item* item) {
     // TODO: Add item to inventory
+    inventory.push_back(item);
+    std::cout <<"Picked up: " << item->getName << "\n";
+
 }
 
 
@@ -67,6 +106,19 @@ void Player::addItem(Item* item) {
 //
 void Player::removeItem(const std::string& item_name) {
     // TODO: Find and remove item from inventory
+    std::string target = toLower(item_name);
+    for(int i=0; i<inventory.size(); i++){
+        if(toLower(inventory[i]->getName())==target){
+            if (inventory[i] == equipped_weapon) equipped_weapon = NULL;
+            if (inventory[i] == equipped_armor) equipped_armor = NULL;
+
+            delete inventory[i];
+            inventory.erase(inventory.begin() +i);
+            std::cout << "Removed item: " << item_name << "\n";
+            return
+        }
+    }
+    std::cout << "Error: Item '" << item_name << "' not found.\n";
 }
 
 
@@ -80,6 +132,17 @@ void Player::removeItem(const std::string& item_name) {
 //
 void Player::displayInventory() const {
     // TODO: Display all items in inventory
+    std::cout << "----- Inventory -----\n";
+
+    if(inventory.empy()){
+        std::cout << "Empty\n";
+    }
+    else{
+        for(Item* item : inventory){
+            std::cout << "- " << item->getName() << " (" << item->getType() << ")\n";
+        }
+    }
+    std::cout << "--------------------\n";
 }
 
 
