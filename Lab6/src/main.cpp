@@ -81,12 +81,88 @@ int main() {
 
         //---------------------- WEEK 2 TESTING ---------------------------
 
-
-
-
-
         
-        // --------- WEEK 1 DONE and TESTED (NO MEM LEAKS!!!) -------------*/
+        /*
+        Player hero("Alice");
+        hero.displayStats();
+        hero.takeDamage(20);  // Inherited method
+        hero.displayStats();
+        return 0;
+        */
+        
+        /*
+        Player hero("Bob");
+        hero.addItem(new Weapon("Sword", "Sharp", 5));
+        hero.addItem(new Consumable("Potion", "Heals", 20));
+        hero.displayInventory();
+        hero.removeItem("potion");  // Case insensitive
+        hero.displayInventory();
+        return 0;
+        */
+
+        /*
+        Player hero("Charlie");
+        hero.addItem(new Weapon("Sword", "Sharp", 5));
+        hero.addItem(new Armor("Chainmail", "Strong", 3));
+        
+        hero.equipWeapon("sword");
+        hero.equipArmor("chainmail");
+        
+        hero.displayStats();
+        
+        int dmg = hero.calculateDamage();
+        std::cout << "Damage: " << dmg << std::endl;  // Should include weapon bonus
+        
+        return 0;
+        */
+        
+        /*
+        Player hero("Dana");
+        hero.displayStats();
+        hero.gainExperience(100);  // Should trigger level up
+        hero.displayStats();
+        return 0;
+        */
+
+        /*
+        Monster orc("Orc", 50, 8, 3, 20, 10);
+        orc.addLoot(new Consumable("Potion", "Heals", 15));
+        orc.displayStats();
+        orc.takeDamage(30);
+        
+        std::vector<Item*> loot = orc.dropLoot();
+        // Clean up loot
+        for (int i = 0; i < loot.size(); i++) {
+            delete loot[i];
+        }
+        
+        return 0;
+        */
+        
+        /*
+        // Test polymorphism - base class pointers to derived objects
+        Monster* monsters[3];
+        monsters[0] = new Goblin();
+        monsters[1] = new Skeleton();
+        monsters[2] = new Dragon();
+        
+        for (int i = 0; i < 3; i++) {
+            monsters[i]->displayStats();
+            std::cout << monsters[i]->getAttackMessage() << std::endl;
+            int dmg = monsters[i]->calculateDamage();
+            std::cout << "Damage: " << dmg << std::endl;
+            std::cout << std::endl;
+        }
+        
+        // Clean up
+        for (int i = 0; i < 3; i++) {
+            delete monsters[i];
+        }
+        
+        return 0;
+        */
+       
+        // --------- WEEK 2 DONE and TESTED (NO MEM LEAKS!!!) -------------*/
 
 
         // Create game object

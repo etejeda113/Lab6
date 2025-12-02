@@ -40,7 +40,7 @@ Monster::~Monster() {
 //
 void Monster::displayStats() const {
     // TODO: Display monster stats
-    std::cout << getName() << " [HP: ]" << getCurrentHP() << "/" << getMaxHP() << "]";
+    std::cout << getName() << " [HP: " << getCurrentHP() << "/" << getMaxHP() << "]\n";
 }
 
 
