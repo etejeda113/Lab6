@@ -26,11 +26,69 @@ int main() {
     
     try {
 
+        /* -----------------------WEEK 1 TESTING-------------------------
+        // Testing Character 
+
+        std::cout << "-----Testing Character-----\n";
         Character hero("Hero", 100, 10, 5);
         hero.displayStats();
         hero.takeDamage(20);
+        hero.displayStats();
         hero.heal(10);
-        return 0;
+        hero.displayStats();
+        std::cout << "\n";
+
+        // Testing Items
+
+        std::cout << "----- Item Tests -----\n";
+        Weapon sword("Iron Sword", "A sturdy blade", 5);
+        Armor chainmail("Chain Mail", "Protective armor", 3);
+        Consumable potion("Health Potion", "Restores HP", 20);
+
+        sword.displayInfo();
+        chainmail.displayInfo();
+        potion.displayInfo();
+        potion.use();
+        potion.use();
+        std::cout << "\n";
+
+        // Testing Inventory
+
+        std::cout << "----- Inventory Tests -----\n";
+
+        std::vector<Item*> inventory;
+        
+        // Add items
+        inventory.push_back(new Weapon("Sword", "Sharp blade", 5));
+        inventory.push_back(new Armor("Shield", "Wooden shield", 2));
+        inventory.push_back(new Consumable("Potion", "Heals", 20));
+        
+        // Display all
+        for (int i = 0; i < inventory.size(); i++) {
+            inventory[i]->displayInfo();
+        }
+        
+        // Clean up - VERY IMPORTANT!
+        for (int i = 0; i < inventory.size(); i++) {
+            delete inventory[i];
+        }
+        inventory.clear();
+        
+        return 0;    
+
+
+        // --------- WEEK 1 DONE and TESTED (NO MEM LEAKS!!!) -------------*/
+
+        //---------------------- WEEK 2 TESTING ---------------------------
+
+
+
+
+
+        
+        // --------- WEEK 1 DONE and TESTED (NO MEM LEAKS!!!) -------------*/
+
+
         // Create game object
         /*Game game;
         

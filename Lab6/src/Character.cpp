@@ -62,7 +62,7 @@ void Character::takeDamage(int damage) {
     }
     // TODO: Print damage message with remaining HP
     std::cout << name <<" takes " << actual_damage 
-        << "damage! (" << current_hp << "/" << max_hp << " HP)" << std::endl;
+        << " damage! (" << current_hp << "/" << max_hp << " HP)" << std::endl;
 }
 
 
@@ -83,7 +83,7 @@ void Character::heal(int amount) {
     }
 
     // TODO: Print healing message
-    std::cout << name << "heals " << amount << " HP! (" 
+    std::cout << name << " heals " << amount << " HP! (" 
         << current_hp << "/" << max_hp << " HP)" << std::endl;
 
 }

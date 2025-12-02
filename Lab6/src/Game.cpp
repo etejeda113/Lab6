@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Item.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>
@@ -12,6 +13,16 @@ Game::Game() : player(NULL), current_room(NULL),
 // TODO: Implement Game destructor
 Game::~Game() {
     // TODO: Clean up player and all rooms
+    if (player != NULL) {
+        delete player;
+        player = NULL;
+    }
+
+    for(std::map<std::string, Room*>::iterator it = world.begin(); it!= world.end(); it++){
+        delete it->second;
+    }
+
+    world.clear();
 }
 
 
@@ -44,17 +55,39 @@ Game::~Game() {
 //
 void Game::initializeWorld() {
     // TODO: Create rooms
-    // Room* entrance = new Room("Dungeon Entrance", "A dark stone corridor...");
-    
+    Room* entrance = new Room("Dungeon Entrance", "A dark stone corridor...");
+    Room* hallway = new Room("Hallway", "A long halLway with flickering lights.");
+    Room* armory = new Room("Armory", "Room filled with rusty weapons and armor.");
+    Room* treasury = new Room("Treasury", "A room full of gold and chests.");
+    Room* throne = new Room("Thrown Room", "The Boss's massive room.");
+
     // TODO: Add rooms to world
-    
+    addRoom(entrance);
+    addRoom(hallway);
+    addRoom(armory);
+    addRoom(treasury);
+    addRoom(throne);
+
     // TODO: Connect rooms bidirectionally
+    connectRooms("Entrance", "north", "Hallway");
+    connectRooms("Hallway", "west", "Armory");
+    connectRooms("Hallway", "east", "Treasury");
+    connectRooms("Hallway", "north", "Throne Room");
     
     // TODO: Add monsters
-    
+    hallway->setMonster(new Monster("Goblin", 10, 2, 1, 5, 10));
+    armory->setMonster(new Monster("Skeleton", 15, 3,1, 8, 15));
+    treasury->setMonster(new Monster("Skeleton", 15, 3, 1, 8, 15));
+    throne-> setMonster(new Monster("Dragon", 50, 10, 5, 50, 100));
+
     // TODO: Add items
-    
+    entrance->addItem(new Item("Small Potion", "Restores 5 HP","Food", 5));
+    armory->addItem(new Item("Iron Sword", "A sturdy sword", "Weapon", 2));
+    armory->addItem(new Item("Chain Mail", "Armor that protects you", "Armor", 3));
+    treasury->addItem(new Item("Helath Potion", "Restores 20 HP", "Food", 20));
+
     // TODO: Set starting room
+    current_room = entrance;
 }
 
 
@@ -66,6 +99,10 @@ void Game::initializeWorld() {
 //
 void Game::createStartingInventory() {
     // TODO: Give player starting items
+    if(player!= NULL){
+        player->addItem(new Weapon("Rusty Dagger", "Damages 2 HP", 2));
+        player->addItem(new Item("Bread", "Restores 5 HP", "Food", 5));
+    }
 }
 
 
@@ -77,6 +114,9 @@ void Game::createStartingInventory() {
 //
 void Game::addRoom(Room* room) {
     // TODO: Add room to world map
+    if(room!=NULL){
+        world[room->getName()] = room;
+    }
 }
 
 
@@ -93,6 +133,29 @@ void Game::addRoom(Room* room) {
 void Game::connectRooms(const std::string& room1_name, const std::string& direction,
                        const std::string& room2_name) {
     // TODO: Connect rooms bidirectionally
+    Room* room1 = world[room1_name];
+    Room* room2 = world[room2_name];
+    if (room1 == NULL || room2 == NULL){
+        return;
+    }
+
+    room1->addExit(direction, room2);
+
+    std::string reverse;
+    if(direction == "north"){
+        reverse = "south";
+    }
+    else if(direction == "south"){
+        reverse = "north";
+    }
+    else if(direction == "east"){
+        reverse = "west";
+    }
+    else if(direction == "west"){
+        reverse = "east";
+    }
+
+    room2->addExit(reverse, room1);
 }
 
 
