@@ -11,10 +11,22 @@ Room::Room(const std::string& name, const std::string& description)
 // TODO: Implement Room destructor
 Room::~Room() {
     // TODO: Clean up monster and items
+    if(monster){
+        delete monster;
+        monster = NULL;
+    }
+
+    for(Item* item : items){
+        delete iteml
+    }
+
+    items.clear();
 }
 
 
 // TODO: Implement display
+void Room::display() const {
+// TODO: Display room information
 // HINTS:
 // - Print formatted room information with decorative borders
 // - Format:
@@ -30,10 +42,24 @@ Room::~Room() {
 //     - item2
 //   
 //   Exits: north, south, east
-//   ========================================
-//
-void Room::display() const {
-    // TODO: Display room information
+
+std::cout << "========================================\n";
+std::cout << name << "\n";
+std::cout << "========================================\n";
+std::cout << description << "\n\n";
+
+if(monster){
+    std::cout << "A " << monster->getName() << " blocks uour path!\n\n";
+}
+
+if(item.empty()!=NULL){
+    std::cout << "Items here:\n";
+    displayItems();
+    std::cout << "\n";
+}
+
+displayExits();
+std::cout << "========================================\n";
 }
 
 
@@ -46,6 +72,17 @@ void Room::display() const {
 //
 void Room::displayExits() const {
     // TODO: Display available exits
+    std::cout << "Exits: ";
+    bool first = true;
+    for (const auto& pair : exits) {
+        if (first==true) std::cout << ", ";
+        std::cout << pair.first;
+        first = false;
+    }
+    if (exits.empty()) std::cout << "None";
+    std::cout << "\n";
+
+
 }
 
 
@@ -56,6 +93,9 @@ void Room::displayExits() const {
 //
 void Room::addExit(const std::string& direction, Room* room) {
     // TODO: Add exit to map
+    if(room){
+        exits[direction] = room;
+    }
 }
 
 
@@ -67,7 +107,11 @@ void Room::addExit(const std::string& direction, Room* room) {
 //
 Room* Room::getExit(const std::string& direction) const {
     // TODO: Look up and return exit
-    return NULL;  // REPLACE THIS
+    auto it = exits.find(direction);
+    if(it != exits.end()){
+        return it->second;
+    }
+    return NULL;
 }
 
 
@@ -76,7 +120,7 @@ Room* Room::getExit(const std::string& direction) const {
 // - Check if direction exists in exits map
 bool Room::hasExit(const std::string& direction) const {
     // TODO: Check if exit exists
-    return false;  // REPLACE THIS
+    return exits.find(direction) != exits.end();
 }
 
 
@@ -87,6 +131,10 @@ bool Room::hasExit(const std::string& direction) const {
 //
 void Room::clearMonster() {
     // TODO: Delete and clear monster
+    if(monster){
+        delete monster;
+        monster = NULL;
+    }
 }
 
 
@@ -97,6 +145,9 @@ void Room::clearMonster() {
 //
 void Room::addItem(Item* item) {
     // TODO: Add item to room
+    if(item){
+        items.push_back(item);
+    }
 }
 
 
@@ -107,6 +158,13 @@ void Room::addItem(Item* item) {
 //
 void Room::removeItem(const std::string& item_name) {
     // TODO: Find and remove item from room
+    std::string target = toLower(itemName);
+    for (int i=0; i<items.size(); i++){
+        if (toLower(items[i]-?getName()) == target){
+            items.erase(items.begin()+i);
+            return;
+        }
+    }
 }
 
 
@@ -117,6 +175,9 @@ void Room::removeItem(const std::string& item_name) {
 //
 void Room::displayItems() const {
     // TODO: Display all items in room
+    for(const Item* item : items){
+        std::cout << "  - " < item->getName() << "\n";
+    }
 }
 
 
@@ -128,5 +189,11 @@ void Room::displayItems() const {
 //
 Item* Room::getItem(const std::string& item_name) {
     // TODO: Find and return item pointer
-    return NULL;  // REPLACE THIS
+    std::string target = toLower(item_name);
+    for(Item* item : items){
+        if (toLower(item->getName()) == target){
+            return item;
+        }
+    }
+    return NULL;
 }
