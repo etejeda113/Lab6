@@ -166,12 +166,45 @@ int main() {
 
 
         // Create game object
-        /*Game game;
+        Game game;
         
         // Run main game loop
         // This doesn't return until game is over
         game.run();
-        */
+        
+
+        /* ---------------------- WEEK 3 TESTING --------------------------
+        Room entrance("Entrance", "A dark corridor");
+        entrance.display();
+   
+        Room room1("Room 1", "First room");
+        Room room2("Room 2", "Second room");
+        
+        room1.addExit("north", &room2);
+        room2.addExit("south", &room1);
+        
+        room1.display();
+        
+        Room* next = room1.getExit("north");
+        if (next) {
+            next->display();
+        }
+        
+        Room room("Armory", "Weapons everywhere");
+        room.addItem(new Weapon("Sword", "Sharp", 5));
+        room.setMonster(new Goblin());
+        
+        room.display();
+        
+        if (room.hasMonster()) {
+            std::cout << "Monster present!" << std::endl;
+        }
+        
+        return 0;
+
+        // --------- WEEK 3 DONE and TESTED (NO MEM LEAKS!!!) -------------*/
+
+
     }
     catch (const std::exception& e) {
         // Catch any exceptions and print error message
