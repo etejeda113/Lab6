@@ -56,21 +56,30 @@ void Player::displayStats() const {
     int attack = getAttack();
     int defense = getDefense();
 
-    if(equipped_weapon){
-        Weapon* w = static_cast<Weapon*>(equipped_weapon);
-        attack += w->getDamageBonus();
-        std::cout << "Attack: " << attack << " (+" << w->getDamageBonus()
-                  << " from " << w->getName() << ")\n";
-    } else {
+    if(equipped_weapon != NULL){
+        Weapon* w = dynamic_cast<Weapon*>(equipped_weapon);
+        if(w){ 
+            attack += w->getDamageBonus();
+            std::cout << "Attack: " << attack << " (+" << w->getDamageBonus()
+                    << " from " << w->getName() << ")\n";
+        } else {
+        std::cout << "Attack: " << attack << "\n";
+    }
+    }
+
+    else {
         std::cout << "Attack: " << attack << "\n";
     }
 
-    if(equipped_armor){
-        Armor* a = static_cast<Armor*>(equipped_armor);
+    if(equipped_armor!=NULL){
+        Armor* a = dynamic_cast<Armor*>(equipped_armor);
+        if(a){
         defense += a->getDefenseBonus();
-        std::cout << "Defense: " << defense << " (+" << a->getDefenseBonus()
-                  << " from " << a->getName() << ")\n";
+        std::cout << "Defense: " << defense << " (+" << a->getDefenseBonus()<< " from " << a->getName() << ")\n";
     } else {
+        std::cout << "Defense: " << defense << "\n";}
+    }
+    else {
         std::cout << "Defense: " << defense << "\n";
     }
 

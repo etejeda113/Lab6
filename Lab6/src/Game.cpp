@@ -75,10 +75,10 @@ void Game::initializeWorld() {
     connectRooms("Hallway", "north", "Throne Room");
     
     // TODO: Add monsters
-    hallway->setMonster(new Monster("Goblin", 10, 2, 1, 5, 10));
-    armory->setMonster(new Monster("Skeleton", 15, 3,1, 8, 15));
-    treasury->setMonster(new Monster("Skeleton", 15, 3, 1, 8, 15));
-    throne-> setMonster(new Monster("Dragon", 50, 10, 5, 50, 100));
+    hallway->setMonster(new Goblin());
+    armory->setMonster(new Skeleton());
+    treasury->setMonster(new Skeleton());
+    throne-> setMonster(new Dragon());
 
     // TODO: Add items
     entrance->addItem(new Item("Small Potion", "Restores 5 HP","Food", 5));
@@ -442,7 +442,7 @@ void Game::pickupItem(const std::string& item_name) {
     if(item){
         player->addItem(item);
         current_room->removeItem(item_name);
-        std::cout << "Picked up " << item->getName() << ".\n";
+        //std::cout << "Picked up " << item->getName() << ".\n";
     } else {
         std::cout << "No such item here.\n";
     }
