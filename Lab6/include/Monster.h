@@ -99,4 +99,51 @@ public:
     int calculateDamage() const;
 };
 
+
+// Troll Class
+// High HP
+// Low Damage
+class Troll : public Monster {
+public:
+    Troll();
+    std::string getAttackMessage() const;
+};
+
+// Ghost Class
+// High Evasion
+
+class Ghost : public Monster {
+public:
+    Ghost();
+    std::string getAttackMessage() const;
+};
+
+// Wizard Class
+class Wizard : public Monster{
+public:
+    Wizard();
+    std::string getAttackMessage() const;
+};
+
+// Charlie Kirk 
+class CharlieKirk : public Monster{
+public:
+    CharlieKirk();
+    std::string getAttackMessage() const;
+};
+
+// Labubu Class
+class LABUBU : public Monster{
+public:
+    LABUBU();
+    std::string getAttackMessage() const;
+};
+// LAFUFU Class
+class LAFUFU : public Monster{
+public:
+    LAFUFU();
+    std::string getAttackMessage() const;
+};
+
+
 #endif // MONSTER_H

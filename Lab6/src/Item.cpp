@@ -170,3 +170,52 @@ void Consumable::use() {
         << healing_amount << " HP." << std::endl;
         used = true;
 }
+
+// Key implementaion 
+Key::Key(const std::string& name, const std::string& description)
+    : Item(name, description, "Key", 0) { 
+    }
+
+void Key::displayInfo() const {
+    std::cout << "[KEY] " << getName() << "\n"
+              << "  Unlocks: " << getDescription() << std::endl;
+}
+
+void Key::use() {
+    std::cout << "You try using " << getName() << ". It might unlock something!\n";
+}
+
+
+// Scroll implementation
+Scroll::Scroll(const std::string& name, const std::string& description, int bonus)
+    : Item(name, description, "Scroll", bonus), bonus(bonus), used(false){ 
+    }
+
+void Scroll::displayInfo() const {
+    std::cout << "[SCROLL] " << getName() << "\n"
+              << "  " << getDescription() << std::endl;
+    std::cout << "  Bonus: +" << getBonusAmount() << " HP" << std::endl;
+}
+
+void Scroll::use() {
+    if(!used){
+        used = true;
+        std::cout << "Using " << getName() << "! " << getBonusAmount() << " HP icreased.\n";
+    }else{
+        std::cout << "ERROR: " << getName() << " has already been activated.\n";
+    }
+}
+
+// Gold implementation
+Gold::Gold(const std::string& name, const std::string& description, int amt)
+    : Item(name, description, "Gold", amt), amount(amt) { }
+
+void Gold::displayInfo() const {
+    std::cout << "[GOLD] " << getName() << "\n";
+    std::cout << "  " << getDescription() << std::endl;
+    std::cout << "  Gold: " <<getAmount() << std::endl;
+}
+
+void Gold::use() {
+    std::cout << "Collected " << amount << " gold coins.\n";
+}

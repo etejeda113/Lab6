@@ -96,12 +96,15 @@ void Player::displayStats() const {
 //
 int Player::calculateDamage() const {
     // TODO: Calculate damage with weapon bonus
-    int base = getAttack();
-    if(equipped_weapon){
-        Weapon* w = static_cast<Weapon*>(equipped_weapon);
-        base += w->getDamageBonus();
+    int base = Character::calculateDamage();
+    Weapon* w = dynamic_cast<Weapon*>(equipped_weapon);
+    if(w){
+        base+= w->getDamageBonus();
     }
-    return base;
+
+    // Add randomness: +/- 2 damage
+    int variation = rand() % 5 - 2; // random number between -2 and +2
+    return std::max(1, base + variation); // ensure at least 1 damage
 }
 
 
@@ -113,7 +116,7 @@ int Player::calculateDamage() const {
 void Player::addItem(Item* item) {
     // TODO: Add item to inventory
     inventory.push_back(item);
-    std::cout <<"Picked up: " << item->getName() << "\n";
+    std::cout <<"Picked up: " << item->getName() << " - " << item->getDescription() << "\n";
 
 }
 

@@ -1,4 +1,5 @@
 #include "Room.h"
+#include "Item.h"
 #include <iostream>
 #include <algorithm>
 
@@ -10,6 +11,24 @@ static std::string toLower(const std::string& s) {
     }
     return out;
 }
+
+static std::string trim(const std::string& s) {
+    size_t start = 0;
+    size_t end = s.length();
+    
+    // Find first non-whitespace character
+    while (start < end && std::isspace(static_cast<unsigned char>(s[start]))) {
+        start++;
+    }
+    
+    // Find last non-whitespace character
+    while (end > start && std::isspace(static_cast<unsigned char>(s[end - 1]))) {
+        end--;
+    }
+    
+    return s.substr(start, end - start);
+}
+
 
 // TODO: Implement Room constructor
 Room::Room(const std::string& name, const std::string& description)
@@ -58,7 +77,7 @@ std::cout << "========================================\n";
 std::cout << description << "\n\n";
 
 if(monster != NULL){
-    std::cout << "A " << monster->getName() << " blocks uour path!\n\n";
+    std::cout << "A " << monster->getName() << " blocks your path!\n\n";
 }
 
 if(!items.empty()){
@@ -214,7 +233,7 @@ Item* Room::getItem(const std::string& item_name) {
     // TODO: Find and return item pointer
     std::string target = toLower(item_name);
     for (size_t i = 0; i < items.size(); i++) {
-        if (toLower(items[i]->getName()) == target){
+        if (toLower(trim(items[i]->getName())) == target){
             return items[i];
         }
     }

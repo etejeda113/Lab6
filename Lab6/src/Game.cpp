@@ -60,6 +60,8 @@ void Game::initializeWorld() {
     Room* armory = new Room("Armory", "Room filled with rusty weapons and armor.");
     Room* treasury = new Room("Treasury", "A room full of gold and chests.");
     Room* throne = new Room("Throne Room", "The Boss's massive room.");
+    Room* laboratory = new Room("Laboratory", "A room full of strange equipment, multimeters, breadboards, wiressss...");
+    Room* secret = new Room("Secret Chamber", "A hidden room with mysterious treasures.");
 
     // TODO: Add rooms to world
     addRoom(entrance);
@@ -67,24 +69,38 @@ void Game::initializeWorld() {
     addRoom(armory);
     addRoom(treasury);
     addRoom(throne);
+    addRoom(laboratory);
+    addRoom(secret);
 
     // TODO: Connect rooms bidirectionally
     connectRooms("Dungeon Entrance", "north", "Hallway");
     connectRooms("Hallway", "west", "Armory");
     connectRooms("Hallway", "east", "Treasury");
     connectRooms("Hallway", "north", "Throne Room");
+    connectRooms("Hallway", "south", "Laboratory");    
+    connectRooms("Laboratory", "east", "Secret Chamber");
+
+
     
     // TODO: Add monsters
     hallway->setMonster(new Goblin());
     armory->setMonster(new Skeleton());
-    treasury->setMonster(new Skeleton());
+    treasury->setMonster(new Troll());
     throne-> setMonster(new Dragon());
+    laboratory->setMonster(new Wizard());
+    secret->setMonster(new LAFUFU());
+    entrance->setMonster(new LABUBU());
+
 
     // TODO: Add items
-    entrance->addItem(new Item("Small Potion", "Restores 5 HP","Food", 5));
-    armory->addItem(new Item("Iron Sword", "A sturdy sword", "Weapon", 2));
-    armory->addItem(new Item("Chain Mail", "Armor that protects you", "Armor", 3));
-    treasury->addItem(new Item("Health Potion", "Restores 20 HP", "Food", 20));
+    entrance->addItem(new Consumable("Small Potion", "Restores 5 HP", 5));
+    entrance->addItem(new Armor("24k Gold Labubu Tracksuit", "Drip or Drown", 50));
+    armory->addItem(new Weapon("Iron Sword", "A sturdy sword", 2));
+    armory->addItem(new Armor("Chain Mail", "Armor that protects you", 3));
+    treasury->addItem(new Consumable("Health Potion", "Restores 20 HP", 20));
+    secret->addItem(new Key("Key", "Opens a secret door"));
+    laboratory->addItem(new Scroll("Magic Scroll", "Contains a powerful spell", 5));
+    hallway->addItem(new Gold("Gold Coins", "A pile of shiny gold", 50));
 
     // TODO: Set starting room
     current_room = entrance;
@@ -383,29 +399,29 @@ void Game::combat(Monster* monster) {
         if(!object.empty() && object[0]==' ') object.erase(0,1);
 
         if(verb == "attack") {
-            int dmg = player->getAttack();
+            int dmg = player->calculateDamage();
             std::cout << "You attack " << monster->getName() << " for " << dmg << " damage.\n";
             monster->takeDamage(dmg);
 
             if(!monster->isAlive()) {
                 std::cout << "You defeated " << monster->getName() << "!\n";
-                player->gainExperience(monster->getGoldReward());
+                player->gainExperience(monster->getExperienceReward());
                 player->addGold(monster->getGoldReward());
 
                 // Drop loot
                 std::vector<Item*> loot = monster->dropLoot();
                 for (size_t i = 0; i < loot.size(); i++) {
-                    for (size_t i = 0; i < loot.size(); i++) {
                         current_room->addItem(loot[i]);
                     }
-                }
 
 
                 if(monster->getName() == "Dragon") victory = true;
 
                 current_room->clearMonster();
                 break;
-            }
+
+        }
+                
         } else if(verb == "use") {
             useItem(object);
         } else if(verb == "flee") {
@@ -418,7 +434,7 @@ void Game::combat(Monster* monster) {
 
         // Monster attacks if alive
         if(monster->isAlive()) {
-            int mdmg = monster->getAttack();
+            int mdmg = monster->calculateDamage();
             std::cout << monster->getName() << " attacks you for " << mdmg << " damage.\n";
             player->takeDamage(mdmg);
         }

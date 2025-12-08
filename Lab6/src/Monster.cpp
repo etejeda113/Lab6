@@ -118,6 +118,9 @@ std::string Goblin::getAttackMessage() const {
 }
 
 
+
+
+
 // ============================================================================
 // Skeleton - Undead warrior
 // ============================================================================
@@ -140,7 +143,6 @@ Skeleton::Skeleton()
 
 }
 
-
 // TODO: Override getAttackMessage for Skeleton
 // HINTS:
 // - Return skeleton-specific attack message
@@ -151,6 +153,86 @@ std::string Skeleton::getAttackMessage() const {
     return "The skeleton rattles its bones and slashes with a sword!";    
 }
 
+// Troll
+Troll::Troll()
+    : Monster("Troll", 120, 7, 4, 15, 10) {
+    // TODO: Add loot items
+    addLoot(new Armor("Thick Skin Armor", "Thick wearable troll hide armor", 30));
+
+}
+
+std::string Troll::getAttackMessage() const {
+    // Return troll attack message
+    return "The hefty troll sure can take a hit but sends a shockwave when charging at you!";
+}
+
+
+// Ghost
+Ghost::Ghost()
+    : Monster("Ghost", 60, 7, 2, 10, 6) {
+    // TODO: Add loot items
+    addLoot(new Armor("Armor of Delusion", "For a brief period you no longer need to worry about losing life!", 30));
+
+}
+
+std::string Ghost::getAttackMessage() const {
+    // Return ghost attack message
+    return "The ghost haunts you causing frequent headaches!";
+}
+
+//Wizard
+Wizard::Wizard()
+    : Monster("Wizard", 140, 12, 6, 25, 25) {
+    // TODO: Add loot items
+    addLoot(new Weapon("Sorcery", "Spellbook for Sorcery!", 30));
+
+}
+
+// Wizard
+std::string Wizard::getAttackMessage() const {
+    // Return wizard attack message
+    return "The Wizard casts a nasty spell on you!";
+}
+
+// Charlie Kirk
+CharlieKirk::CharlieKirk()
+    : Monster("Charlie Kirk", 120, 7, 4, 15, 10) {
+    // TODO: Add loot items
+    addLoot(new Weapon("Torch", "We carry the flame! We honor his name", 30));
+
+}
+
+std::string CharlieKirk::getAttackMessage() const {
+    // Return troll attack message
+    return "WE ARE CHARLIE KIRKKK! WE CAAAAAARRY THE FLAAAAAME...";
+}
+
+//LABUBU
+LABUBU::LABUBU()
+    : Monster("LABUBU", 67, 6, 7, 69, 420) {
+    // TODO: Add loot items
+    addLoot(new Armor("24K Gold Dior Bag", "24k Gold Dior bag to hold all your essentials", 21));
+
+}
+
+std::string LABUBU::getAttackMessage() const {
+    // Return wizard attack message
+    return "Labubu Labu Labu Labubu Serenade";
+}
+
+
+//LABUBU
+LAFUFU::LAFUFU()
+    : Monster("LAFUFU", 67, 6, 7, 69, 420) {
+    // TODO: Add loot items
+    addLoot(new Weapon("Labubu Disguise", "Labubu from Temu", 3));
+
+}
+
+std::string LAFUFU::getAttackMessage() const {
+    // Return wizard attack message
+    return "Labubu Labu Labu Labubu Serenade";
+}
 
 // ============================================================================
 // Dragon - Boss enemy with special ability

@@ -123,4 +123,42 @@ public:
     bool isUsed() const { return used; }
 };
 
+/**
+ * Key class - Unlock doors
+ */
+class Key : public Item {
+public:
+    Key(const std::string& name, const std::string& description);
+    void displayInfo() const;
+    void use();
+};
+
+/**
+ * Scroll class
+ */
+class Scroll : public Item {
+private:
+    int bonus;
+    bool used;
+public:
+    Scroll(const std::string& name, const std::string& description, int bonus);
+    void displayInfo() const;
+    void use();
+    int getBonusAmount() const {return bonus;}
+    bool isUsed() const{return used;} 
+};
+
+/**
+ * Gold class - Can be collected or sold
+ */
+class Gold : public Item {
+private:
+    int amount;
+public:
+    Gold(const std::string& name, const std::string& description, int amount);
+    void displayInfo() const;
+    void use();
+    int getAmount() const { return amount;}
+
+};
 #endif // ITEM_H
