@@ -11,13 +11,35 @@ static std::string toLower(const std::string& s) {
     std::string out = s;
     std::transform(out.begin(), out.end(), out.begin(), ::tolower);
     return out;
-}
+};
 
 
-Player::Player(const std::string& name)
+Player::Player(const std::string& name, PlayerClass pc)
     : Character(name, 100, 10, 5),
       level(1), experience(0), gold(0),
-      equipped_weapon(NULL), equipped_armor(NULL) {
+      equipped_weapon(NULL), equipped_armor(NULL), player_class(pc) {
+        switch(player_class){
+            case WARRIOR:
+            setMaxHP(150);
+            setCurrentHP(150);
+            setAttack(20);
+            setDefense(15);
+            break;
+
+            case MAGE:
+            setMaxHP(90);
+            setCurrentHP(90);
+            setAttack(15);
+            setDefense(10);
+            break;
+
+            case ROGUE:
+            setMaxHP(100);
+            setCurrentHP(100);
+            setAttack(15);
+            setDefense(15);
+            break;        
+        }
 }
 
 

@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Item.h"
+#include "Player.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>
@@ -199,7 +200,14 @@ void Game::run() {
     std::cout << "Enter your name: ";
     std::getline(std::cin, player_name);
 
-    player = new Player(player_name);
+    std::cout << "Choose your class:\n";
+    std::cout << "0 = Warrior\n1 = Mage\n2 = Rogue\n";
+    int class_choice;
+    std::cin >> class_choice;
+    std::cin.ignore(); // discard leftover newline
+
+    PlayerClass pc = static_cast<PlayerClass>(class_choice);
+    player = new Player(player_name, pc);
     initializeWorld();
     createStartingInventory();
 

@@ -5,6 +5,12 @@
 #include "Item.h"
 #include <vector>
 
+enum PlayerClass{
+    WARRIOR,
+    MAGE,
+    ROGUE
+};
+
 /**
  * Player class - Represents the player character
  * 
@@ -25,6 +31,7 @@ private:
     int level;
     int experience;
     int gold;
+    PlayerClass player_class; // contains player class
     std::vector<Item*> inventory;  // Player owns these items!
     Item* equipped_weapon;         // Points to item in inventory (not separately owned)
     Item* equipped_armor;          // Points to item in inventory (not separately owned)
@@ -33,7 +40,7 @@ public:
     // Constructor
     // TODO: Implement in Player.cpp
     // HINT: Must call Character base constructor
-    Player(const std::string& name);
+    Player(const std::string& name, PlayerClass pc);
     
     // Destructor - CRITICAL for memory management!
     // TODO: Implement in Player.cpp
