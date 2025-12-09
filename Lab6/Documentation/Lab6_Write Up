@@ -1,0 +1,113 @@
+# ECE 312 - Lab 6 Write-Up
+
+**Name:** Eliana Tejeda  
+**EID:** et24324  
+**Date:** 12/8/2025
+
+---
+
+## 1. Design Decisions (3-4 sentences)
+
+Briefly describe your key design choices and rationale:
+
+In order to avoid repeating code, my Character Class served as the base class for both Player and Monster, providing attributes like (HP, attack, defense). I also implemented polymorphism with Items where Weapon, Armor, Consumable, all inherit from Item while still maintaining their own displayinfo() methods. Adding new subclasses for monsters and istems avoiding the need for a ton of switch statements.
+
+- **Overall implementations:** How did you make use of object-oriented concepts in your decision?  Specifically, how did you use inheritance and polymorphism (if you did) and how did it help or complicate the design over using a language like C?  Draw a diagram showing the classes you used and their relationships to each other (subclass to superclass relationships specifically.) 
+
+Character (base)
+    |__ Player
+    |__ Monster (Goblin, Skeleton, Troll, Dragon, Wizard, LAFUFU, LABUBU)
+        |__ Goblin
+        |__ Skeleton
+        |__ Troll
+        |__ Dragon
+        |__ Ghost
+        |__ Lafufu
+        |__ Labubu
+
+Item (base)
+    |__ Weapon
+    |__ Armor
+    |__ Consumable
+    |__ Key
+    |__ Scroll
+    |__ Gold
+
+Room (has monsters and items)
+Game(runs everything)
+Shop (manages buying and selling)
+
+- **Memory management:** What strategy did you use to avoid leaks? Any particular challenges?
+
+My approach was basically "whoever creates it, deletes it" - Player owns and deletes inventory items, Rooms own their monsters/items, and Game owns everything else. The tricky part was when items move between objects, like picking up an item from a room means the Room stops owning it and Player takes over, so I had to make sure only one of them calls delete. For the shop, I needed a special removeItemShop() that doesn't delete the item since the shop takes ownership. Also had to be careful with equipped weapons/armor since they're just pointers to items already in the inventory.
+
+## 2. Testing & Debugging (2-3 sentences)
+
+Describe your testing process and any major bugs you encountered:
+
+- **Testing approach:** What was your strategy beyond running `make test`?
+
+Besides make test, I just played through the game multiple times testing everything - moving around, fighting monsters, using items, equipping gear, and especially the shop stuff. I tried breaking things on purpose like attacking when there's no monster and picking up items that don't exist. Ran valgrind at the end to make sure I wasn't leaking memory everywhere.
+
+
+- **Most difficult bug:** What was the hardest bug to find/fix and how did you solve it?
+
+For the longest time by attacks were not random despite having rand().  Turns out it was because I was static_casting instead of dynamic_casting the attack. Although the resolution was simple, changing the cast type, finding where the bug was at, caused this to be my bost difficult and time consuming bug.
+---
+
+## 3. Implementation Challenges (2-3 sentences)
+
+Which TODOs were most challenging and why?
+
+1. **Hardest TODO:** 
+Combat() was definitely the hardest because there's so much going on - tracking turns, handling player actions, monster attacks, checking if anyone died, dropping loot, and making sure victory/defeat works right. Lots of if statements and edge cases to account for.
+
+2. **Most time-consuming:** 
+Adding the shop took the longest because I had to change the parameters to several functions. I updated Item constructors to add prices, made gold methods in Player, wrote the whole Shop class file, modified Game to call shop stuff, and then went back through ALL my item creations to add the price parameter. Really annoying but it works now.
+
+3. **Most interesting:** 
+InitializeWorld() was byfar the most creative and interesting TODO. Specifically reating new monsters because I got to create a Labubu and Lafufus. I also found placing the Wizzard into the Laboratory abosolute PERFECTION.
+
+---
+
+
+## 4. Reflection (1-2 sentences)
+
+What was the most valuable lesson from this lab?
+
+Classes in C++ make this project much easier than creating tons of switch statements that would have required in a C inplementation. 
+
+---
+
+Implemented Extentions: 
+
+
+### Extension 2: More Monster Types
+- Troll (high HP, low damage)
+- Ghost (high evasion)
+- Wizard (ranged attacks)
+
+### Extension 3: More Item Types
+- Keys (unlock doors)
+- Scrolls (one-time spell effects)
+- Gold items (just for selling)
+
+### Extension 4: Character Classes
+- Warrior (high HP, bonus attack)
+- Mage (low HP, magic attacks)
+- Rogue (high damage, low defense)
+
+### Extension 5: Shop System
+- NPC shopkeeper
+- Buy/sell items
+- Gold economy
+
+## Submission Checklist
+
+- [yes] All functionality completed
+- [yes] `make test` passes with no failures
+- [yes] `make valgrind` shows no memory leaks
+- [yes] Game fully functional 
+- [yes] Code compiles without warnings (`-Wall -Wextra`)
+- [yes] This write-up completed
+- [yes] Optional Bonus attempted? (Yes/No): yes +20pts
