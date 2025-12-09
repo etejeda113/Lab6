@@ -167,6 +167,19 @@ void Player::removeItem(const std::string& item_name) {
     std::cout << "Error: Item '" << item_name << "' not found.\n";
 }
 
+void Player::removeItemShop(const std::string& item_name) {
+    std::string target = toLower(item_name);
+    for(size_t i = 0; i < inventory.size(); i++) {
+        if(toLower(inventory[i]->getName()) == target) {
+            if (inventory[i] == equipped_weapon) equipped_weapon = NULL;
+            if (inventory[i] == equipped_armor) equipped_armor = NULL;
+            
+            // DON'T delete the item - shop will take ownership
+            inventory.erase(inventory.begin() + i);
+            return;
+        }
+    }
+}
 
 // TODO: Implement displayInventory
 // HINTS:

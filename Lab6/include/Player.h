@@ -31,11 +31,11 @@ private:
     int level;
     int experience;
     int gold;
-    PlayerClass player_class; // contains player class
     std::vector<Item*> inventory;  // Player owns these items!
     Item* equipped_weapon;         // Points to item in inventory (not separately owned)
     Item* equipped_armor;          // Points to item in inventory (not separately owned)
-    
+    PlayerClass player_class; // contains player class
+
 public:
     // Constructor
     // TODO: Implement in Player.cpp
@@ -78,6 +78,9 @@ public:
     // TODO: Implement these in Player.cpp
     void gainExperience(int exp);
     void levelUp();
+
+    void removeItemShop(const std::string& item_name);  // Special version for shop
+
     
     // Getters
     int getLevel() const { return level; }

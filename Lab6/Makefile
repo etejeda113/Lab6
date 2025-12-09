@@ -24,7 +24,9 @@ SOURCES = $(SRC_DIR)/main.cpp \
           $(SRC_DIR)/Monster.cpp \
           $(SRC_DIR)/Item.cpp \
           $(SRC_DIR)/Room.cpp \
-          $(SRC_DIR)/Game.cpp
+          $(SRC_DIR)/Game.cpp \
+          $(SRC_DIR)/Shop.cpp
+
 
 # Object files (automatically generated from source files)
 OBJECTS = $(SOURCES:.cpp=.o)
@@ -35,7 +37,9 @@ HEADERS = $(INC_DIR)/Character.h \
           $(INC_DIR)/Monster.h \
           $(INC_DIR)/Item.h \
           $(INC_DIR)/Room.h \
-          $(INC_DIR)/Game.h
+          $(INC_DIR)/Game.h \
+          $(INC_DIR)/Shop.h
+
 
 # Default target - builds the executable
 all: $(EXECUTABLE)
@@ -88,3 +92,5 @@ Item.o: Item.cpp Item.h
 Room.o: Room.cpp Room.h Monster.h Item.h Character.h
 
 Game.o: Game.cpp Game.h Player.h Room.h Monster.h Item.h Character.h
+
+Shop.o: Shop.cpp Shop.h Item.h Player.h

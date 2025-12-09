@@ -23,10 +23,13 @@
  * - Command parsing and dispatch
  * - Game loop implementation
  */
+
+ class Shop;
 class Game {
 private:
     Player* player;
     Room* current_room;
+    Shop* shop;
     std::map<std::string, Room*> world;  // All rooms keyed by name - Game owns these!
     bool game_over;
     bool victory;
@@ -42,6 +45,7 @@ private:
     void useItem(const std::string& item_name);
     void equip(const std::string& item_name);
     void help();
+    void enterShop();  // ADD THIS METHOD
     
     // Combat system
     // TODO: Implement in Game.cpp

@@ -1,12 +1,13 @@
 #include "Game.h"
 #include "Item.h"
 #include "Player.h"
+#include "Shop.h" 
 #include <iostream>
 #include <sstream>
 #include <algorithm>
 
 // TODO: Implement Game constructor
-Game::Game() : player(NULL), current_room(NULL), 
+Game::Game() : player(NULL), current_room(NULL), shop(NULL),
                game_over(false), victory(false) {
 }
 
@@ -24,6 +25,11 @@ Game::~Game() {
     }
 
     world.clear();
+
+    if(shop != NULL) {
+        delete shop;
+        shop = NULL;
+    }
 }
 
 
@@ -64,6 +70,12 @@ void Game::initializeWorld() {
     Room* laboratory = new Room("Laboratory", "A room full of strange equipment, multimeters, breadboards, wiressss...");
     Room* secret = new Room("Secret Chamber", "A hidden room with mysterious treasures.");
 
+    shop = new Shop();
+    shop->addToStock(new Weapon("Steel Sword", "A sharp blade", 5, 100), 100);
+    shop->addToStock(new Armor("Plate Mail", "Heavy armor", 8, 150), 150);
+    shop->addToStock(new Consumable("Mega Potion", "Restores 50 HP", 50, 75), 75);
+    shop->addToStock(new Consumable("Super Potion", "Restores 30 HP", 30, 40), 40);
+
     // TODO: Add rooms to world
     addRoom(entrance);
     addRoom(hallway);
@@ -94,14 +106,14 @@ void Game::initializeWorld() {
 
 
     // TODO: Add items
-    entrance->addItem(new Consumable("Small Potion", "Restores 5 HP", 5));
-    entrance->addItem(new Armor("24k Gold Labubu Tracksuit", "Drip or Drown", 50));
-    armory->addItem(new Weapon("Iron Sword", "A sturdy sword", 2));
-    armory->addItem(new Armor("Chain Mail", "Armor that protects you", 3));
-    treasury->addItem(new Consumable("Health Potion", "Restores 20 HP", 20));
-    secret->addItem(new Key("Key", "Opens a secret door"));
-    laboratory->addItem(new Scroll("Magic Scroll", "Contains a powerful spell", 5));
-    hallway->addItem(new Gold("Gold Coins", "A pile of shiny gold", 50));
+    entrance->addItem(new Consumable("Small Potion", "Restores 5 HP", 5, 20));
+    entrance->addItem(new Armor("24k Gold Labubu Tracksuit", "Drip or Drown", 50, 500));
+    armory->addItem(new Weapon("Iron Sword", "A sturdy sword", 2, 50));
+    armory->addItem(new Armor("Chain Mail", "Armor that protects you", 3, 75));
+    treasury->addItem(new Consumable("Health Potion", "Restores 20 HP", 20, 50));
+    secret->addItem(new Key("Key", "Opens a secret door", 0));
+    laboratory->addItem(new Scroll("Magic Scroll", "Contains a powerful spell", 5, 100));
+    hallway->addItem(new Gold("Gold Coins", "A pile of shiny gold", 50, 0));
 
     // TODO: Set starting room
     current_room = entrance;
@@ -117,8 +129,8 @@ void Game::initializeWorld() {
 void Game::createStartingInventory() {
     // TODO: Give player starting items
     if(player!= NULL){
-        player->addItem(new Weapon("Rusty Dagger", "Damages 2 HP", 2));
-        player->addItem(new Consumable("Bread", "Restores 5 HP", 5));
+        player->addItem(new Weapon("Rusty Dagger", "Damages 2 HP", 2, 10));
+        player->addItem(new Consumable("Bread", "Restores 5 HP", 5, 5));
     }
 }
 
@@ -295,11 +307,61 @@ void Game::processCommand(const std::string& command) {
     else if(verb == "help" || verb == "h" || verb == "?") {
         help();
     }
+    else if(verb == "shop") {
+        enterShop();
+    }
     else if(verb == "quit" || verb == "exit") {
         game_over = true;
     }
     else{
         std::cout << "Unknown command. Type 'help' for a list of commands.\n";
+    }
+}
+
+void Game::enterShop() {
+    if(!shop) {
+        std::cout << "There is no shop here.\n";
+        return;
+    }
+    
+    std::cout << "\nYou enter Charlie's Shop...\n";
+    bool in_shop = true;
+    
+    while(in_shop) {
+        shop->shop_display(player);
+        std::cout << "\nShop> ";
+        std::string command;
+        std::getline(std::cin, command);
+        std::transform(command.begin(), command.end(), command.begin(), ::tolower);
+        
+        std::istringstream iss(command);
+        std::string verb;
+        iss >> verb;
+        std::string object;
+        std::getline(iss, object);
+        if(!object.empty() && object[0] == ' ') object.erase(0,1);
+        
+        if(verb == "buy") {
+            if(object.empty()) {
+                std::cout << "Buy what? Usage: buy <item name>\n";
+            } else {
+                shop->buyItem(player, object);
+            }
+        }
+        else if(verb == "sell") {
+            if(object.empty()) {
+                std::cout << "Sell what? Usage: sell <item name>\n";
+            } else {
+                shop->sellItem(player, object);
+            }
+        }
+        else if(verb == "leave" || verb == "exit") {
+            std::cout << "You leave the shop.\n";
+            in_shop = false;
+        }
+        else {
+            std::cout << "Unknown shop command. Options: buy <item>, sell <item>, leave\n";
+        }
     }
 }
 
@@ -542,6 +604,7 @@ void Game::help() {
     std::cout << "  use <item> - Use consumable\n";
     std::cout << "  equip <item> - Equip weapon/armor\n";
     std::cout << "  stats - Show character stats\n";
+    std::cout << "  shop - Enter the shop\n"; 
     std::cout << "  help - Show this help\n";
     std::cout << "  quit - Exit game\n";
 }

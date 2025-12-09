@@ -10,8 +10,8 @@
 // - Parameters map directly to member variables
 //
 Item::Item(const std::string& name, const std::string& description,
-           const std::string& type, int value)
-    : name(name), description(description), type(type), value(value) {
+           const std::string& type, int value, int gold_price)
+    : name(name), description(description), type(type), value(value), gold_price(gold_price){
 }
 
 
@@ -63,8 +63,8 @@ void Item::displayBrief() const {
 // - Also initialize damage_bonus member
 // - Format: Weapon::Weapon(...) : Item(name, desc, "Weapon", damage), damage_bonus(damage) { }
 //
-Weapon::Weapon(const std::string& name, const std::string& description, int damage)
-    : Item(name, description, "Weapon", damage), damage_bonus(damage) {
+Weapon::Weapon(const std::string& name, const std::string& description, int damage, int gold_price)
+    : Item(name, description, "Weapon", damage, gold_price), damage_bonus(damage) {
 }
 
 
@@ -96,8 +96,8 @@ void Weapon::displayInfo() const {
 // - Value is the defense bonus
 // - Also initialize defense_bonus member
 //
-Armor::Armor(const std::string& name, const std::string& description, int defense)
-    : Item(name, description, "Armor", defense), defense_bonus(defense) {
+Armor::Armor(const std::string& name, const std::string& description, int defense, int gold_price)
+    : Item(name, description, "Armor", defense, gold_price), defense_bonus(defense) {
 }
 
 
@@ -129,8 +129,8 @@ void Armor::displayInfo() const {
 // - Initialize healing_amount and set used to false
 //
 Consumable::Consumable(const std::string& name, const std::string& description, 
-                       int healing)
-    : Item(name, description, "Consumable", healing), 
+                       int healing, int gold_price)
+    : Item(name, description, "Consumable", healing, gold_price), 
       healing_amount(healing), used(false) {
 }
 
@@ -172,8 +172,8 @@ void Consumable::use() {
 }
 
 // Key implementaion 
-Key::Key(const std::string& name, const std::string& description)
-    : Item(name, description, "Key", 0) { 
+Key::Key(const std::string& name, const std::string& description, int gold_price)
+    : Item(name, description, "Key", 0, gold_price) { 
     }
 
 void Key::displayInfo() const {
@@ -187,8 +187,8 @@ void Key::use() {
 
 
 // Scroll implementation
-Scroll::Scroll(const std::string& name, const std::string& description, int bonus)
-    : Item(name, description, "Scroll", bonus), bonus(bonus), used(false){ 
+Scroll::Scroll(const std::string& name, const std::string& description, int bonus, int gold_price)
+    : Item(name, description, "Scroll", bonus, gold_price), bonus(bonus), used(false){ 
     }
 
 void Scroll::displayInfo() const {
@@ -207,8 +207,8 @@ void Scroll::use() {
 }
 
 // Gold implementation
-Gold::Gold(const std::string& name, const std::string& description, int amt)
-    : Item(name, description, "Gold", amt), amount(amt) { }
+Gold::Gold(const std::string& name, const std::string& description, int amt, int gold_price)
+    : Item(name, description, "Gold", amt, gold_price), amount(amt) { }
 
 void Gold::displayInfo() const {
     std::cout << "[GOLD] " << getName() << "\n";

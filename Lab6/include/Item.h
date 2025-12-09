@@ -23,12 +23,13 @@ private:
     std::string description;
     std::string type;  // "Weapon", "Armor", or "Consumable"
     int value;  // Damage bonus, defense bonus, or healing amount
+    int gold_price;
     
 public:
     // Constructor
     // TODO: Implement in Item.cpp
     Item(const std::string& name, const std::string& description, 
-         const std::string& type, int value);
+         const std::string& type, int value, int gold_price=0);
     
     // Destructor
     // TODO: Implement in Item.cpp
@@ -39,6 +40,7 @@ public:
     std::string getDescription() const { return description; }
     std::string getType() const { return type; }
     int getValue() const { return value; }
+    int getGoldPrice() const {return gold_price; }
     
     // Virtual function with default implementation
     // Derived classes should override this
@@ -65,7 +67,7 @@ public:
     // Constructor
     // TODO: Implement in Item.cpp
     // HINT: Must call base Item constructor in initializer list
-    Weapon(const std::string& name, const std::string& description, int damage);
+    Weapon(const std::string& name, const std::string& description, int damage, int gold_price=0);
     
     // Override displayInfo to show weapon-specific format
     // TODO: Implement in Item.cpp
@@ -86,7 +88,7 @@ public:
     // Constructor
     // TODO: Implement in Item.cpp
     // HINT: Must call base Item constructor in initializer list
-    Armor(const std::string& name, const std::string& description, int defense);
+    Armor(const std::string& name, const std::string& description, int defense, int gold_price=0);
     
     // Override displayInfo to show armor-specific format
     // TODO: Implement in Item.cpp
@@ -108,7 +110,7 @@ public:
     // Constructor
     // TODO: Implement in Item.cpp
     // HINT: Must call base Item constructor in initializer list
-    Consumable(const std::string& name, const std::string& description, int healing);
+    Consumable(const std::string& name, const std::string& description, int healing, int gold_price=0);
     
     // Override displayInfo to show consumable-specific format
     // TODO: Implement in Item.cpp
@@ -128,7 +130,7 @@ public:
  */
 class Key : public Item {
 public:
-    Key(const std::string& name, const std::string& description);
+    Key(const std::string& name, const std::string& description, int gold_price=0);
     void displayInfo() const;
     void use();
 };
@@ -141,7 +143,7 @@ private:
     int bonus;
     bool used;
 public:
-    Scroll(const std::string& name, const std::string& description, int bonus);
+    Scroll(const std::string& name, const std::string& description, int bonus, int gold_price=0);
     void displayInfo() const;
     void use();
     int getBonusAmount() const {return bonus;}
@@ -155,7 +157,7 @@ class Gold : public Item {
 private:
     int amount;
 public:
-    Gold(const std::string& name, const std::string& description, int amount);
+    Gold(const std::string& name, const std::string& description, int amount, int gold_price=0);
     void displayInfo() const;
     void use();
     int getAmount() const { return amount;}
