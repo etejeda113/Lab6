@@ -182,7 +182,7 @@ std::string Ghost::getAttackMessage() const {
 
 //Wizard
 Wizard::Wizard()
-    : Monster("Wizard", 140, 12, 6, 25, 25) {
+    : Monster("Wizard", 140, 16, 6, 25, 25) {
     // TODO: Add loot items
     addLoot(new Weapon("Sorcery", "Spellbook for Sorcery!", 30));
 
@@ -194,7 +194,7 @@ std::string Wizard::getAttackMessage() const {
     return "The Wizard casts a nasty spell on you!";
 }
 
-// Charlie Kirk
+/* Charlie Kirk
 CharlieKirk::CharlieKirk()
     : Monster("Charlie Kirk", 120, 7, 4, 15, 10) {
     // TODO: Add loot items
@@ -207,9 +207,11 @@ std::string CharlieKirk::getAttackMessage() const {
     return "WE ARE CHARLIE KIRKKK! WE CAAAAAARRY THE FLAAAAAME...";
 }
 
+*/
+
 //LABUBU
 LABUBU::LABUBU()
-    : Monster("LABUBU", 67, 6, 7, 69, 420) {
+    : Monster("LABUBU", 67, 13, 7, 69, 420) {
     // TODO: Add loot items
     addLoot(new Armor("24K Gold Dior Bag", "24k Gold Dior bag to hold all your essentials", 21));
 
@@ -223,7 +225,7 @@ std::string LABUBU::getAttackMessage() const {
 
 //LABUBU
 LAFUFU::LAFUFU()
-    : Monster("LAFUFU", 67, 6, 7, 69, 420) {
+    : Monster("LAFUFU", 67, 14, 7, 69, 420) {
     // TODO: Add loot items
     addLoot(new Weapon("Labubu Disguise", "Labubu from Temu", 3));
 

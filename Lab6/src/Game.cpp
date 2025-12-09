@@ -45,9 +45,10 @@ Game::~Game() {
 // SUGGESTED WORLD LAYOUT:
 //                [Throne Room]
 //                     |
-//     [Armory] - [Hallway] - [Treasury]
-//                     |
-//                 [Entrance]
+//     [Armory] -  [Hallway] - [Treasury]
+//        |            |           |
+//        |            |           |
+//    [Labortary]  [Entrance]  [Secret Chamber]
 //
 // MONSTERS:
 // - Hallway: Goblin
@@ -87,11 +88,23 @@ void Game::initializeWorld() {
 
     // TODO: Connect rooms bidirectionally
     connectRooms("Dungeon Entrance", "north", "Hallway");
+    connectRooms("Hallway", "south", "Dungeon Entrance");
+
     connectRooms("Hallway", "west", "Armory");
+    connectRooms("Armory", "east", "Hallway");
+
     connectRooms("Hallway", "east", "Treasury");
+    connectRooms("Treasury", "west", "Hallway");
+
     connectRooms("Hallway", "north", "Throne Room");
-    connectRooms("Hallway", "south", "Laboratory");    
-    connectRooms("Laboratory", "east", "Secret Chamber");
+    connectRooms("Throne Room", "south", "Hallway");
+
+    connectRooms("Treasury", "south", "Secret Chamber");   
+    connectRooms("Secret Chamber", "north", "Treasury");    
+ 
+    connectRooms("Armory", "south", "Laboratory");
+    connectRooms("Laboratory", "north", "Armory");
+
 
 
     
